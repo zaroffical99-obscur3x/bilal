@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQ Test - Discover Your Genius</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px) rotate(360deg); opacity: 0; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.3);
+            animation: cardEntrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 100%;
+        }
+
+        @keyframes cardEntrance {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .brain-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 15px 50px rgba(102, 126, 234, 0.6); }
+        }
+
+        h1 {
+            font-size: 3em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px;
+            border-radius: 20px;
+            color: white;
+            margin-bottom: 40px;
+            animation: slideUp 0.8s ease 0.5s both;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .info-box h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .info-box ul {
+            list-style: none;
+        }
+
+        .info-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-box li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.3em;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .timer {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 20px rgba(245, 87, 108, 0.3);
+            animation: timerPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes timerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        .progress {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            animation: badgeSlide 0.5s ease;
+        }
+
+        @keyframes badgeSlide {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .question-text {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            animation: questionFade 0.5s ease;
+        }
+
+        @keyframes questionFade {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .option {
+            padding: 20px 25px;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            font-size: 1.1em;
+            animation: optionSlide 0.5s ease;
+            animation-fill-mode: both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option:nth-child(1) { animation-delay: 0.1s; }
+        .option:nth-child(2) { animation-delay: 0.2s; }
+        .option:nth-child(3) { animation-delay: 0.3s; }
+        .option:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes optionSlide {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .option:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .option:hover:before {
+            width: 100%;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .navigation {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+        }
+
+        .nav-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-prev {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .btn-prev:hover:not(:disabled) {
+            background: #d0d0d0;
+            transform: translateX(-5px);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            flex: 1;
+            box-shadow: 0 5px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn-next:hover:not(:disabled) {
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.5);
+        }
+
+        .question-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+            gap: 10px;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+        }
+
+        .q-num {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background: white;
+            border: 2px solid #e0e0e0;
+        }
+
+        .q-num:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .q-num.answered {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .q-num.current {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-color: transparent;
+            animation: currentQ 1s ease-in-out infinite;
+        }
+
+        @keyframes currentQ {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .result-score {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            color: white;
+            margin: 30px 0;
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+            animation: resultReveal 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes resultReveal {
+            from { 
+                opacity: 0; 
+                transform: scale(0.5) rotate(-10deg);
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .result-score .score-number {
+            font-size: 6em;
+            font-weight: bold;
+            margin: 20px 0;
+            animation: scoreCount 2s ease;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        @keyframes scoreCount {
+            from { opacity: 0; transform: scale(0); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .result-level {
+            font-size: 2em;
+            background: white;
+            color: #667eea;
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: levelBounce 1s ease 0.5s both;
+        }
+
+        @keyframes levelBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .result-details {
+            display: grid;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .result-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            animation: cardSlideIn 0.8s ease;
+            animation-fill-mode: both;
+        }
+
+        .result-card:nth-child(1) { animation-delay: 0.2s; }
+        .result-card:nth-child(2) { animation-delay: 0.4s; }
+        .result-card:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes cardSlideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .card { padding: 30px 20px; }
+            h1 { font-size: 2em; }
+            .question-text { font-size: 1.2em; }
+            .result-score .score-number { font-size: 4em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <!-- Start Screen -->
+        <div class="card" id="startScreen">
+            <div class="brain-icon">🧠</div>
+            <h1>IQ Test Pro</h1>
+            <p class="subtitle">Discover Your True Intellectual Potential</p>
+            
+            <div class="info-box">
+                <h2>✨ Test Features</h2>
+                <ul>
+                    <li>10 Scientifically Designed Questions</li>
+                    <li>10 Minutes Time Challenge</li>
+                    <li>Pattern Recognition & Logic</li>
+                    <li>Mathematical Reasoning</li>
+                    <li>Instant Professional Results</li>
+                </ul>
+            </div>
+            
+            <button class="btn" onclick="startTest()">
+                Begin Your Journey 🚀
+            </button>
+        </div>
+
+        <!-- Test Screen -->
+        <div class="card hidden" id="testScreen">
+            <div class="question-header">
+                <div class="timer" id="timer">⏱️ <span id="timeDisplay">10:00</span></div>
+                <div class="progress" id="progress">Question 1 of 10</div>
+            </div>
+
+            <div class="category-badge" id="category">Pattern Recognition</div>
+            <div class="question-text" id="question"></div>
+            
+            <div class="options" id="options"></div>
+            
+            <div class="navigation">
+                <button class="nav-btn btn-prev" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                <button class="nav-btn btn-next" onclick="nextQuestion()" id="nextBtn">Next →</button>
+            </div>
+
+            <div class="question-nav" id="questionNav"></div>
+        </div>
+
+        <!-- Result Screen -->
+        <div class="card hidden" id="resultScreen">
+            <div class="brain-icon">🏆</div>
+            <h1>Your Results Are In!</h1>
+            
+            <div class="result-score">
+                <div>Your IQ Score</div>
+                <div class="score-number" id="iqScore">0</div>
+                <div class="result-level" id="iqLevel">Calculating...</div>
+            </div>
+
+            <div class="result-details">
+                <div class="result-card">
+                    <h3>📊 Performance</h3>
+                    <p id="correctAnswers"></p>
+                </div>
+                <div class="result-card">
+                    <h3>💡 Intelligence Level</h3>
+                    <p id="levelDescription"></p>
+                </div>
+                <div class="result-card">
+                    <h3>ℹ️ About This Test</h3>
+                    <p>This is a simplified IQ assessment for entertainment. Professional IQ tests should be administered by qualified psychologists.</p>
+                </div>
+            </div>
+
+            <button class="btn" onclick="location.reload()">Take Test Again 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                category: "Pattern Recognition",
+                question: "What number comes next in the sequence: 2, 4, 8, 16, ?",
+                options: ["24", "32", "20", "18"],
+                correct: 1
+            },
+            {
+                category: "Logical Reasoning",
+                question: "If all Bloops are Razzies and all Razzies are Lazzies, are all Bloops definitely Lazzies?",
+                options: ["True", "False", "Cannot be determined", "Only sometimes"],
+                correct: 0
+            },
+            {
+                category: "Verbal Intelligence",
+                question: "Which word does NOT belong with the others?",
+                options: ["Rose", "Tulip", "Tree", "Daisy"],
+                correct: 2
+            },
+            {
+                category: "Mathematical Reasoning",
+                question: "If 5 machines make 5 widgets in 5 minutes, how long for 100 machines to make 100 widgets?",
+                options: ["100 minutes", "20 minutes", "5 minutes", "1 minute"],
+                correct: 2
+            },
+            {
+                category: "Pattern Recognition",
+                question: "Complete the analogy: Cat is to Kitten as Dog is to ?",
+                options: ["Puppy", "Pet", "Animal", "Bark"],
+                correct: 0
+            },
+            {
+                category: "Spatial Reasoning",
+                question: "How many faces does a cube have?",
+                options: ["4", "6", "8", "12"],
+                correct: 1
+            },
+            {
+                category: "Logical Reasoning",
+                question: "What is the next letter in the sequence: A, C, F, J, ?",
+                options: ["M", "N", "O", "P"],
+                correct: 2
+            },
+            {
+                category: "Mathematical Reasoning",
+                question: "What number is missing: 3, 7, 15, 31, ?, 127",
+                options: ["47", "63", "55", "64"],
+                correct: 1
+            },
+            {
+                category: "Verbal Intelligence",
+                question: "What is the opposite of 'abundance'?",
+                options: ["Plenty", "Scarcity", "Wealth", "Generosity"],
+                correct: 1
+            },
+            {
+                category: "Pattern Recognition",
+                question: "Rearrange 'CIFAIPC' to spell a type of:",
+                options: ["City", "Animal", "Ocean", "Country"],
+                correct: 2
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = {};
+        let timeLeft = 600;
+        let timerInterval;
+
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        function startTest() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('testScreen').classList.remove('hidden');
+            loadQuestion();
+            startTimer();
+            createQuestionNav();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    finishTest();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            document.getElementById('timeDisplay').textContent = 
+                `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('category').textContent = q.category;
+            document.getElementById('question').textContent = q.question;
+            document.getElementById('progress').textContent = 
+                `Question ${currentQuestion + 1} of ${questions.length}`;
+
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            q.options.forEach((option, index) => {
+                const div = document.createElement('div');
+                div.className = 'option';
+                if (answers[currentQuestion] === index) {
+                    div.classList.add('selected');
+                }
+                div.textContent = String.fromCharCode(65 + index) + '. ' + option;
+                div.onclick = () => selectOption(index);
+                optionsContainer.appendChild(div);
+            });
+
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            document.getElementById('nextBtn').textContent = 
+                currentQuestion === questions.length - 1 ? 'Finish ✓' : 'Next →';
+            document.getElementById('nextBtn').disabled = answers[currentQuestion] === undefined;
+
+            updateQuestionNav();
+        }
+
+        function selectOption(index) {
+            answers[currentQuestion] = index;
+            loadQuestion();
+        }
+
+        function nextQuestion() {
+            if (answers[currentQuestion] !== undefined) {
+                if (currentQuestion < questions.length - 1) {
+                    currentQuestion++;
+                    loadQuestion();
+                } else {
+                    finishTest();
+                }
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function createQuestionNav() {
+            const nav = document.getElementById('questionNav');
+            nav.innerHTML = '';
+            questions.forEach((_, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'q-num';
+                btn.textContent = index + 1;
+                btn.onclick = () => {
+                    currentQuestion = index;
+                    loadQuestion();
+                };
+                nav.appendChild(btn);
+            });
+        }
+
+        function updateQuestionNav() {
+            const btns = document.querySelectorAll('.q-num');
+            btns.forEach((btn, index) => {
+                btn.classList.remove('current', 'answered');
+                if (index === currentQuestion) {
+                    btn.classList.add('current');
+                } else if (answers[index] !== undefined) {
+                    btn.classList.add('answered');
+                }
+            });
+        }
+
+        function finishTest() {
+            clearInterval(timerInterval);
+            document.getElementById('testScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+            calculateResults();
+        }
+
+        function calculateResults() {
+            let correct = 0;
+            questions.forEach((q, index) => {
+                if (answers[index] === q.correct) correct++;
+            });
+
+            const percentage = (correct / questions.length) * 100;
+            const iqScore = Math.round(100 + ((percentage - 50) * 0.6));
+
+            let level, description, color;
+            if (iqScore >= 140) {
+                level = "Genius"; 
+                description = "Exceptional intellectual ability - You're in the top 0.5% of the population!";
+            } else if (iqScore >= 130) {
+                level = "Very Superior"; 
+                description = "Highly gifted intelligence - Outstanding cognitive capabilities!";
+            } else if (iqScore >= 120) {
+                level = "Superior"; 
+                description = "Above average intelligence - Excellent problem-solving skills!";
+            } else if (iqScore >= 110) {
+                level = "High Average"; 
+                description = "Good cognitive abilities - Strong analytical thinking!";
+            } else if (iqScore >= 90) {
+                level = "Average"; 
+                description = "Normal intelligence range - Well-balanced cognitive skills!";
+            } else if (iqScore >= 80) {
+                level = "Low Average"; 
+                description = "Slightly below average - Room for growth and development!";
+            } else {
+                level = "Below Average"; 
+                description = "Consider additional support for cognitive development!";
+            }
+
+            animateScore(iqScore);
+            document.getElementById('iqLevel').textContent = level;
+            document.getElementById('correctAnswers').textContent = 
+                `You answered ${correct} out of ${questions.length} questions correctly (${Math.round(percentage)}%)`;
+            document.getElementById('levelDescription').textContent = description;
+        }
+
+        function animateScore(finalScore) {
+            let current = 0;
+            const increment = finalScore / 50;
+            const scoreElement = document.getElementById('iqScore');
+            
+            const interval = setInterval(() => {
+                current += increment;
+                if (current >= finalScore) {
+                    scoreElement.textContent = finalScore;
+                    clearInterval(interval);
+                } else {
+                    scoreElement.textContent = Math.round(current);
+                }
+            }, 30);
+        }
+    </script>
+</body>
+</html>
